@@ -3,10 +3,11 @@ package com.choilab.proj.skt;
 import javax.swing.SwingUtilities;
 
 import com.choilab.proj.skt.Configure.ConfigureManager;
+import com.choilab.proj.skt.DockerHelper.DockerHelper.Docker;
 import com.choilab.proj.skt.Job.JobManager;
 
 public class Executor {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// 1. configure xml 파싱을 통해 load
 		ConfigureManager cm = new ConfigureManager();
 
@@ -24,6 +25,8 @@ public class Executor {
 		// 3-1. Container run 한 후, Server conatainer ip 얻어오기
 		// 3-2. mysql table
 
+		
+		
 		// 4. Client side init
 		// 4-1. Thread pool 생성
 		// 4-2. Configure에 정의된 만큼 Container 생성

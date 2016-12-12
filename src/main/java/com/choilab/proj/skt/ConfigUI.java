@@ -22,7 +22,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
-import com.choilab.proj.skt.Configure.ConfigureDTO;
+import com.choilab.proj.skt.Configure.Configure;
 
 public class ConfigUI extends JFrame implements ActionListener {
 
@@ -50,8 +50,8 @@ public class ConfigUI extends JFrame implements ActionListener {
 	// LOG
 	Border border2 = BorderFactory.createEtchedBorder();
 
-	JTextArea textArea = new JTextArea(10,39); // LOG 기록 @@@
-	JScrollPane infoScroll = new JScrollPane(textArea);
+	static JTextArea textArea = new JTextArea(10,39); // LOG 기록 @@@
+	static JScrollPane infoScroll = new JScrollPane(textArea);
 	
 	// BUTTON
 	JPanel buttonPanel = new JPanel();
@@ -75,7 +75,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 			cachePanel.add(rb1);
 			cachePanel.add(rb2);
 			
-			if(ConfigureDTO.isCache() == true) {
+			if(Configure.isCache() == true) {
 				rb1.setSelected(true);
 			} else {
 				rb2.setSelected(true);
@@ -87,11 +87,11 @@ public class ConfigUI extends JFrame implements ActionListener {
 			
 			inputPanel.add(typeLabel);
 			inputPanel.add(txtType);
-			txtType.setText(String.valueOf(ConfigureDTO.getType()));
+			txtType.setText(String.valueOf(Configure.getType()));
 
 			inputPanel.add(conLabel);
 			inputPanel.add(txtCon);
-			txtCon.setText(String.valueOf(ConfigureDTO.getContainers()));
+			txtCon.setText(String.valueOf(Configure.getContainers()));
 			
 			inputPanel.setPreferredSize(new Dimension(inputPanel.getWidth(), 120));
 			
@@ -122,6 +122,9 @@ public class ConfigUI extends JFrame implements ActionListener {
 		}
 	}
 	
+	public static void log(String str){
+		textArea.append(str + "\n");
+	}
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == buttonRun) {
 			JOptionPane.showMessageDialog(this, "이걸 고치면 됨!!"); // RUN @@@
