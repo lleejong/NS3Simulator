@@ -7,6 +7,10 @@ public class JobQueue {
 	private LinkedList<Job> queue = new LinkedList<Job>();
 	private int MAX_QUEUE_SIZE = 10;
 	
+	public JobQueue(int MAX_QUEUE_SIZE){
+		this.MAX_QUEUE_SIZE = MAX_QUEUE_SIZE;
+	}
+	
 
 	public synchronized void enqueue(Job job) throws InterruptedException{
 		while(queue.size() == MAX_QUEUE_SIZE){

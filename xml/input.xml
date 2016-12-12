@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<twamp>
+	<job seq="1">
+		<txloss>0</txloss>
+		<txdelay>788</txdelay>
+		<txjitter>118</txjitter>
+		<rxloss>0</rxloss>
+		<rxdelay>759</rxdelay>
+		<rxjitter>68</rxjitter>
+	</job>
+</twamp>
