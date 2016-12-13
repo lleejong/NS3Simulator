@@ -13,7 +13,7 @@ public class JobPool {
 	
 	public JobPool(int MAX_HANDLER_NUM, int MAX_QUEUE_SIZE, ArrayList<DCEContainer> dceContainers){
 		queue = new JobQueue(MAX_QUEUE_SIZE);
-		for(int i = 1; i <= MAX_HANDLER_NUM; i ++){
+		for(int i = 0; i < MAX_HANDLER_NUM; i ++){
 			handlerList.add(new JobHandler(i,queue,dceContainers.get(i)));
 		}
 		

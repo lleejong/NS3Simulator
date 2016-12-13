@@ -33,7 +33,7 @@ public class Executor {
 		
 		DockerHelper.dceInit();
 		for(int i = 0; i < Configure.getContainers(); i++){
-			new DCEContainer();
+			dceContainers.add(new DCEContainer());
 		}
 		
 		JobScheduler jobScheduler = new JobScheduler(dceContainers);
