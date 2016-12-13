@@ -59,11 +59,13 @@ public class Executor {
 		
 		
 		
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new ConfigUI();
-			}
-		});
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				new ConfigUI();
+//			}
+//		});
+		
+		Executor.run();
 		
 		
 	}
