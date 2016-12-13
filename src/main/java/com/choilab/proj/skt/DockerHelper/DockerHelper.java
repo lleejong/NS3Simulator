@@ -92,6 +92,7 @@ public class DockerHelper {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
 							executionResult.add(line);
+							System.out.println(line);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
