@@ -13,7 +13,6 @@ public class CacheContainer {
 	}
 	private CacheContainer() {
 		init();
-		CacheContainer.hostname = getHostname();
 	}
 
 	private void init() {
@@ -39,10 +38,10 @@ public class CacheContainer {
 		}
 	}
 
-	private String getHostname() {
-		if (hostname.equals(""))
-			hostname = DockerHelper.getHostname();
-		return hostname;
+	public String getHostname() {
+		if (CacheContainer.hostname.equals(""))
+			CacheContainer.hostname = DockerHelper.getHostname();
+		return CacheContainer.hostname;
 	}
 
 }

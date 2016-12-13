@@ -25,6 +25,7 @@ public class Executor {
 		// 3-1. Container run 한 후, Server conatainer ip 얻어오기
 		// 3-2. mysql table
 		CacheContainer cacheContainer = CacheContainer.getInstance();
+		cacheContainer.getHostname();
 		// 4. Client side init
 		// 4-1. Thread pool 생성
 		
