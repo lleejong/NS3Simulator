@@ -6,6 +6,13 @@ public class Configure {
 	static private boolean cache = true;
 	static private int type = 1;
 	static private int containers = 1;
+	
+	public static final String IMAGE_TAG_CACHE = "skt/ns3-dce-cache";
+	public static final String IMAGE_TAG_DCE = "skt/ns3-dce";
+	
+	public static final String CONTAINER_TAG_CACHE = "ns3-dce-cache";
+	public static final String CONTAINER_TAG_DCE_PREFIX = "dce-client";
+	public static final int MAX_DCE_CONTAINER = 20;
 
 	public static boolean isCache() {
 		return cache;

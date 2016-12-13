@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <twamp>
-	<job seq="1">
+	<job>
 		<txloss>0</txloss>
 		<txdelay>788</txdelay>
 		<txjitter>118</txjitter>

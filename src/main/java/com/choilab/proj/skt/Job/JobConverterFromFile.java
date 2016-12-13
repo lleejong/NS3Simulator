@@ -1,6 +1,7 @@
 package com.choilab.proj.skt.Job;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -10,14 +11,13 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class JobManager {
-	public JobManager () {
-		readXML();
-	} 
+public class JobConverterFromFile {
 
-	public void readXML () {
+	public static ArrayList<Job> readXML () {
 		try {
 
+			ArrayList<Job> list = new ArrayList<Job>();
+			
 			File fXmlFile = new File("./xml/input.xml");
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -38,18 +38,23 @@ public class JobManager {
 				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
 					Element eElement = (Element) nNode;
-
-					System.out.println("ID : " + eElement.getAttribute("seq"));
-					System.out.println("TxLoss : " + eElement.getElementsByTagName("txloss").item(0).getTextContent());
-					System.out.println("TxDelay : " + eElement.getElementsByTagName("txdelay").item(0).getTextContent());
-					System.out.println("TxJitter : " + eElement.getElementsByTagName("txjitter").item(0).getTextContent());
-					System.out.println("RxLoss : " + eElement.getElementsByTagName("rxloss").item(0).getTextContent());
-					System.out.println("RxDelay : " + eElement.getElementsByTagName("rxdelay").item(0).getTextContent());
-					System.out.println("RxJitter : " + eElement.getElementsByTagName("rxjitter").item(0).getTextContent());
+					
+					double txLoss = Double.parseDouble(eElement.getElementsByTagName("txloss").item(0).getTextContent());
+					double txDelay = Double.parseDouble(eElement.getElementsByTagName("txdelay").item(0).getTextContent());
+					double txJitter = Double.parseDouble(eElement.getElementsByTagName("txjitter").item(0).getTextContent());
+					double rxLoss = Double.parseDouble(eElement.getElementsByTagName("rxloss").item(0).getTextContent());
+					double rxDelay = Double.parseDouble(eElement.getElementsByTagName("rxdelay").item(0).getTextContent());
+					double rxJitter = Double.parseDouble(eElement.getElementsByTagName("rxjitter").item(0).getTextContent());
+					
+					list.add(new Job(new NS3Data(txLoss,txDelay,txJitter,rxLoss, rxDelay,rxJitter)));
 				}
 			}
+			
+			return list;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 package com.choilab.proj.skt.Job;
 
-public class Job implements Runnable{
+public class Job{
 	
 	private NS3Data input;
 	
@@ -8,7 +8,7 @@ public class Job implements Runnable{
 		this.input = input;
 	}
 	
-	public void run(){
-		
+	public NS3Data getNS3Data(){
+		return input;
 	}
 }

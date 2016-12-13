@@ -14,13 +14,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConfigureManager {
-	//TODO : xml parser 援ы쁽 
 
-	public ConfigureManager () {
-		readXML();
-	} 
+	
 
-	public void readXML () {
+	public static void readXML () {
 		try {
 
 			File fXmlFile = new File("./xml/configure.xml");
@@ -60,7 +57,7 @@ public class ConfigureManager {
 		}
 	} 
 
-	public void writeXML (boolean cache, int type, int containers) {
+	public static void writeXML (boolean cache, int type, int containers) {
 		try {
 
 			File fXmlFile = new File("./xml/configure.xml");
