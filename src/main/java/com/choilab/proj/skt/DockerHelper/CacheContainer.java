@@ -41,7 +41,8 @@ public class CacheContainer {
 	public String getHostname() {
 		if (CacheContainer.hostname.equals(""))
 			CacheContainer.hostname = DockerHelper.getHostname();
-		return CacheContainer.hostname;
+		//return CacheContainer.hostname;
+		return "127.17.0.5";
 	}
 
 }
