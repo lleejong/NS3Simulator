@@ -7,7 +7,7 @@ import com.choilab.proj.skt.Configure.Configure;
 
 public class CacheContainer {
 	private final static CacheContainer instance = new CacheContainer();
-	public static String hostname;
+	public static String hostname = "";
 	public static CacheContainer getInstance(){
 		return CacheContainer.instance;
 	}
