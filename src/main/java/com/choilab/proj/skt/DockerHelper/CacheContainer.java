@@ -7,7 +7,7 @@ import com.choilab.proj.skt.Configure.Configure;
 
 public class CacheContainer {
 	private final static CacheContainer instance = new CacheContainer();
-	public static String hostname = "";
+	public static String hostname = "172.17.0.5";
 	public static CacheContainer getInstance(){
 		return CacheContainer.instance;
 	}
@@ -39,10 +39,10 @@ public class CacheContainer {
 	}
 
 	public String getHostname() {
-		if (CacheContainer.hostname.equals(""))
-			CacheContainer.hostname = DockerHelper.getHostname();
-		//return CacheContainer.hostname;
-		return "127.17.0.5";
+//		if (CacheContainer.hostname.equals(""))
+//			CacheContainer.hostname = DockerHelper.getHostname();
+//		//return CacheContainer.hostname;
+		return "172.17.0.5";
 	}
 
 }
