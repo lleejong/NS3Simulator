@@ -24,7 +24,7 @@ public class DockerHelper {
 		command = "docker exec -i -t "+ Configure.CONTAINER_TAG_CACHE +" service mysql start";
 		exec(command);
 		//docker exec -i -t ns3-dce-cache bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql"
-		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE + "bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE + " bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
 		exec(command);
 		return result;
 	}
