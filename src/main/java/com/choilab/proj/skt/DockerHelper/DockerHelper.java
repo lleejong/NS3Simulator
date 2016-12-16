@@ -112,6 +112,7 @@ public class DockerHelper {
 				}
 			}).start();
 			process.waitFor();
+			System.out.println(command);
 		
 			return executionResult;
 		} catch (IOException e) {
