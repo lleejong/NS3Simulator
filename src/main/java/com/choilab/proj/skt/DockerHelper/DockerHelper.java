@@ -51,7 +51,7 @@ public class DockerHelper {
 			e.printStackTrace();
 		}
 		
-		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE
+		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
 				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
 
 		exec(command);
@@ -125,7 +125,7 @@ public class DockerHelper {
 			e.printStackTrace();
 		}
 
-		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE
+		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
 				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
 
 		exec(command);
@@ -147,12 +147,12 @@ public class DockerHelper {
 	public static void dceInit() {
 		try {
 			String command = "docker stop " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			for (int i = 1; i < Configure.getContainers(); i++) {
+			for (int i = 1; i <= Configure.getContainers(); i++) {
 				exec(command + i);
 				Thread.sleep(500);
 			}
 			command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			for (int i = 1; i < Configure.getContainers(); i++) {
+			for (int i = 1; i <= Configure.getContainers(); i++) {
 				exec(command + i);
 				Thread.sleep(500);
 			}
