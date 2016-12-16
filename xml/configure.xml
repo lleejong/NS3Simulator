@@ -1,7 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><configure>
-	<setup id="01">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<configure>
+	<setup>
 		<cache>true</cache>
 		<type>1</type>
 		<containers>4</containers>
 	</setup>
 </configure>
+
