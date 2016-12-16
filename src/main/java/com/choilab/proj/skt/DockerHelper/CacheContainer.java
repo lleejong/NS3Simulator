@@ -6,9 +6,9 @@ import com.choilab.proj.skt.ConfigUI;
 import com.choilab.proj.skt.Configure.Configure;
 
 public class CacheContainer {
-	
+
 	public static String hostname = "";
-	
+
 	public CacheContainer() {
 		init();
 	}
@@ -26,8 +26,9 @@ public class CacheContainer {
 
 		if (isExist) {
 			ArrayList<String> logs = DockerHelper.startCacheContainer();
-			for (String log : logs)
-				ConfigUI.log("  -" + log);
+			if (logs != null)
+				for (String log : logs)
+					ConfigUI.log("  -" + log);
 		} else {
 			ConfigUI.log("Initiate Cache Container..");
 			ArrayList<String> logs = DockerHelper.initCacheContainer();
