@@ -19,7 +19,7 @@ public class DockerHelper {
 	public static ArrayList<String> executionResult;
 
 	public static ArrayList<String> initCacheContainer() {
-		String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
+		String command = "docker run -i -t -d -p 6789:6789 --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 		ArrayList<String> result = exec(command);
 		exec(command);
 		// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
@@ -95,7 +95,7 @@ public class DockerHelper {
 	}
 
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i -t " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
+		String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
 				+ " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
 		// ArrayList<String> result = exec(command);
 		ArrayList<String> result = exec(command);
