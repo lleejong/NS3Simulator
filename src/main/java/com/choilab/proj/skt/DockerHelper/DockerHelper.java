@@ -17,111 +17,118 @@ public class DockerHelper {
 	// hostname -i
 
 	public static ArrayList<String> executionResult;
-	
+
 	public static ArrayList<String> initCacheContainer() {
-		String command = "docker run -i -t -d --name "+ Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
+		String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 		ArrayList<String> result = exec(command);
-		command = "docker exec -i "+ Configure.CONTAINER_TAG_CACHE +" /bin/bash service mysql start";
+		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
 		exec(command);
-		//docker exec -i -t ns3-dce-cache bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql"
-		
+		// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
+		// /NS3CacheServer/ns3_structure.sql"
+
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
-		//docker exec -i dce-cache /bin/bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
+		// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
+		// /NS3CacheServer/ns3_structure.sql";
 		exec(command);
 		return result;
 	}
-	
+
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i "+ (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"/NS3Client/run.sh "+ args +"\"";
-		//ArrayList<String> result = exec(command);
+		String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"/NS3Client/run.sh " + args + "\"";
+		// ArrayList<String> result = exec(command);
 		ArrayList<String> result = exec(command);
-		for(String log : result){
+		for (String log : result) {
 			System.out.println(log);
 		}
-		
+
 	}
-	
+
 	public static ArrayList<String> initDCEContainer(int id) {
-		String command = "docker run -i -t -d --name "+ (Configure.CONTAINER_TAG_DCE_PREFIX+id) + " " + Configure.IMAGE_TAG_DCE;
+		String command = "docker run -i -t -d --name " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " " + Configure.IMAGE_TAG_DCE;
 		ArrayList<String> result = exec(command);
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		command = "docker exec -i "+ (Configure.CONTAINER_TAG_DCE_PREFIX+id) +" /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
+		command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
 		exec(command);
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		command = "docker exec -i "+ (Configure.CONTAINER_TAG_DCE_PREFIX+id) +" /bin/bash -c \"chmod 777 /NS3Client/run.sh\"";
+		command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"chmod 777 /NS3Client/run.sh\"";
 		exec(command);
 		return result;
 	}
-	
+
 	public static ArrayList<String> startCacheContainer() {
-		String command = "docker stop "+ Configure.CONTAINER_TAG_CACHE;
+		String command = "docker stop " + Configure.CONTAINER_TAG_CACHE;
 		exec(command);
 		command = "docker start " + Configure.CONTAINER_TAG_CACHE;
 		ArrayList<String> result = exec(command);
 		try {
-			Thread.sleep(100);
+			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		command = "docker exec -i "+ Configure.CONTAINER_TAG_CACHE +" /bin/bash service mysql start";
+		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
 		exec(command);
-		
+
 		return result;
 	}
-	public static String getHostname(){
-		String command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE +" hostname -i";
+
+	public static String getHostname() {
+		String command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " hostname -i";
 		ArrayList<String> result = exec(command);
 		return result.get(0);
 	}
-	public static void dceInit(){
+
+	public static void dceInit() {
 		String command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-		for(int i = 1; i < Configure.MAX_DCE_CONTAINER; i++){
-			exec(command + i);
+		try {
+			for (int i = 1; i < Configure.MAX_DCE_CONTAINER; i++) {
+				exec(command + i);
+				Thread.sleep(500);
+			}
+		} catch (Exception e) {
+
 		}
 	}
-	public static boolean dockerImageCheck(){
+
+	public static boolean dockerImageCheck() {
 		String command = "docker images";
 		ArrayList<String> result = exec(command);
 		boolean cacheImg = false;
 		boolean dceImg = false;
-		
-		for(String log : result){
-			if(log.contains(Configure.IMAGE_TAG_CACHE))
+
+		for (String log : result) {
+			if (log.contains(Configure.IMAGE_TAG_CACHE))
 				cacheImg = true;
-			else if(log.contains(Configure.IMAGE_TAG_DCE))
+			else if (log.contains(Configure.IMAGE_TAG_DCE))
 				dceImg = true;
 		}
-		
+
 		return cacheImg & dceImg;
 	}
-	
-	
-	
 
 	private static ArrayList<String> exec(String command) {
 		try {
-			System.out.println("----"+command);
+			System.out.println("----" + command);
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
-			
+
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-						
+
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
@@ -143,7 +150,7 @@ public class DockerHelper {
 			}).start();
 			process.waitFor();
 			System.out.println(command);
-		
+
 			return executionResult;
 		} catch (IOException e) {
 			e.printStackTrace();
