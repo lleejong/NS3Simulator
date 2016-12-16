@@ -21,7 +21,6 @@ public class DockerHelper {
 	public static ArrayList<String> initCacheContainer() {
 		String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 		ArrayList<String> result = exec(command);
-		command = "docker exec -i -p 6789:6789 " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
 		exec(command);
 		// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
 		// /NS3CacheServer/ns3_structure.sql"
@@ -108,8 +107,33 @@ public class DockerHelper {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
 		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		
+		command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE
+				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+
+		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		return result;
 	}
