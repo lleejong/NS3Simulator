@@ -3,6 +3,7 @@ package com.choilab.proj.skt.DockerHelper;
 import java.util.ArrayList;
 
 import com.choilab.proj.skt.ConfigUI;
+import com.choilab.proj.skt.Configure.Configure;
 import com.choilab.proj.skt.Job.NS3Data;
 
 public class DCEContainer {
@@ -33,7 +34,7 @@ public class DCEContainer {
 
 	public void doJob(NS3Data data) {
 		String cacheHost = CacheContainer.hostname;
-		String args = cacheHost + " " + data.toString();
+		String args = cacheHost + " " + Configure.getPort() + " " +data.toString();
 		DockerHelper.dceTask(args, id);
 	}
 

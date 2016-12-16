@@ -5,7 +5,7 @@
 		<cache>true</cache>
 		<type>1</type>
 		<containers>4</containers>
-		<port>8888</port>
+		<port>6789</port>
 	</setup>
 </configure>
 
