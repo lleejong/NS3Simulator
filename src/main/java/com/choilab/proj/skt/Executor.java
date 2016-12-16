@@ -30,6 +30,8 @@ public class Executor {
 		// 4. Client side init
 		// 4-1. Thread pool 생성
 		
+		DockerHelper.cacheServerExecute();
+		
 		ArrayList<DCEContainer> dceContainers = new ArrayList<DCEContainer>();
 		
 		DockerHelper.dceInit();
