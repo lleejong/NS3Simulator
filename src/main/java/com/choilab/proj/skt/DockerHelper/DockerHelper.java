@@ -35,11 +35,27 @@ public class DockerHelper {
 		// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
 		// /NS3CacheServer/ns3_structure.sql";
 		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE
+				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+
+		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i -t " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
+		String command = "docker exec -i -t " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
+				+ " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
 		// ArrayList<String> result = exec(command);
 		ArrayList<String> result = exec(command);
 		for (String log : result) {
