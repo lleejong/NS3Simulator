@@ -39,7 +39,7 @@ public class DockerHelper {
 	}
 
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
+		String command = "docker exec -i -t " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
 		// ArrayList<String> result = exec(command);
 		ArrayList<String> result = exec(command);
 		for (String log : result) {
