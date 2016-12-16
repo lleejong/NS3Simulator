@@ -33,7 +33,11 @@ public class DockerHelper {
 	public static void dceTask(String args, int containerID) {
 		String command = "docker exec -i "+ (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"/NS3Client/run.sh "+ args +"\"";
 		//ArrayList<String> result = exec(command);
-		exec(command);
+		ArrayList<String> result = exec(command);
+		for(String log : result){
+			System.out.println(log);
+		}
+		
 	}
 	
 	public static ArrayList<String> initDCEContainer(int id) {
