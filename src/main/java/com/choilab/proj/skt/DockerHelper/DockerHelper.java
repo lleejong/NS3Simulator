@@ -123,12 +123,12 @@ public class DockerHelper {
 	public static void dceInit() {
 		try {
 			String command = "docker stop " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			for (int i = 1; i < Configure.MAX_DCE_CONTAINER; i++) {
+			for (int i = 1; i < Configure.getContainers(); i++) {
 				exec(command + i);
 				Thread.sleep(500);
 			}
 			command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			for (int i = 1; i < Configure.MAX_DCE_CONTAINER; i++) {
+			for (int i = 1; i < Configure.getContainers(); i++) {
 				exec(command + i);
 				Thread.sleep(500);
 			}
