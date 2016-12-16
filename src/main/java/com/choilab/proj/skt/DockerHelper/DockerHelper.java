@@ -65,6 +65,11 @@ public class DockerHelper {
 		}
 		command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"chmod 777 /NS3Client/run.sh\"";
 		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 

@@ -32,7 +32,7 @@ public class DCEContainer {
 	
 	public void doJob(NS3Data data){
 		String cacheHost = CacheContainer.hostname;
-		String args = cacheHost + data.toString();
+		String args = cacheHost + " " + data.toString();
 		DockerHelper.dceTask(args,id);
 	}
 
