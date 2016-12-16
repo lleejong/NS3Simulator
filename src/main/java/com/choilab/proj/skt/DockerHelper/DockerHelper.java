@@ -21,16 +21,16 @@ public class DockerHelper {
 	public static ArrayList<String> initCacheContainer() {
 		String command = "docker run -i -t -d --name "+ Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 		ArrayList<String> result = exec(command);
-		command = "docker exec -i -t -d "+ Configure.CONTAINER_TAG_CACHE +" service mysql start";
+		command = "docker exec -i -t "+ Configure.CONTAINER_TAG_CACHE +" /bin/bash service mysql start";
 		exec(command);
 		//docker exec -i -t ns3-dce-cache bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql"
-		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE + " bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
 		exec(command);
 		return result;
 	}
 	
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i -t "+ (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " bash -c \"/NS3Client/run.sh "+ args +"\"";
+		String command = "docker exec -i -t "+ (Configure.CONTAINER_TAG_DCE_PREFIX + containerID) + " /bin/bash -c \"/NS3Client/run.sh "+ args +"\"";
 		//ArrayList<String> result = exec(command);
 		exec(command);
 	}
@@ -46,7 +46,7 @@ public class DockerHelper {
 		exec(command);
 		command = "docker start " + Configure.CONTAINER_TAG_CACHE;
 		ArrayList<String> result = exec(command);
-		command = "docker exec -i -t -d "+ Configure.CONTAINER_TAG_CACHE +" service mysql start";
+		command = "docker exec -i -t -d "+ Configure.CONTAINER_TAG_CACHE +" /bin/bash service mysql start";
 		exec(command);
 		
 		return result;
