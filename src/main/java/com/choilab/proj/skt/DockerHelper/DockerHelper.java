@@ -22,7 +22,7 @@ public class DockerHelper {
 
 	public static ArrayList<String> initCacheContainer() {
 		try {
-			String command = "docker run -i -t -d -p "+ Configure.getPort() + " --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
+			String command = "docker run -i -t -d -p "+ Configure.getPort()+":"+Configure.getPort() + " --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 			ArrayList<String> result = exec(command);
 		
 			Thread.sleep(SLEEP_TIMER_LONG);
