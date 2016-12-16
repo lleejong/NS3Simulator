@@ -6,12 +6,10 @@ import com.choilab.proj.skt.ConfigUI;
 import com.choilab.proj.skt.Configure.Configure;
 
 public class CacheContainer {
-	private final static CacheContainer instance = new CacheContainer();
+	
 	public static String hostname = "";
-	public static CacheContainer getInstance(){
-		return CacheContainer.instance;
-	}
-	private CacheContainer() {
+	
+	public CacheContainer() {
 		init();
 	}
 

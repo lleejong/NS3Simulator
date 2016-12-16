@@ -24,7 +24,7 @@ public class Executor {
 		// 3. Server side init
 		// 3-1. Container run 한 후, Server conatainer ip 얻어오기
 		// 3-2. mysql table
-		CacheContainer cacheContainer = CacheContainer.getInstance();
+		CacheContainer cacheContainer = new CacheContainer();
 		cacheContainer.getHostname();
 	
 		// 4. Client side init

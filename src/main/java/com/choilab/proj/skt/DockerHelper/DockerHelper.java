@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import com.choilab.proj.skt.Configure.Configure;
 
 public class DockerHelper {
+	private static final int SLEEP_TIMER_SHORT = 200;
+	private static final int SLEEP_TIMER_LONG = 500;
 
 	// docker run -i -t -d --name dce_cache skt/ns3-dce-cache
 	// docker run -i -t -d --name dce_client1 skt/ns3-dce
@@ -19,76 +21,64 @@ public class DockerHelper {
 	public static ArrayList<String> executionResult;
 
 	public static ArrayList<String> initCacheContainer() {
-		String command = "docker run -i -t -d -p 6789:6789 --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
-		ArrayList<String> result = exec(command);
-		exec(command);
-		// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
-		// /NS3CacheServer/ns3_structure.sql"
+		try {
+			String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
+			ArrayList<String> result = exec(command);
+			exec(command);
+			// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
+			// /NS3CacheServer/ns3_structure.sql"
 
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
-		// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
-		// /NS3CacheServer/ns3_structure.sql";
-		exec(command);
-		try {
-			Thread.sleep(500);
+			Thread.sleep(SLEEP_TIMER_LONG);
+
+			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
+			exec(command);
+
+			Thread.sleep(SLEEP_TIMER_LONG);
+
+			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
+			// /NS3CacheServer/ns3_structure.sql";
+			exec(command);
+			Thread.sleep(SLEEP_TIMER_SHORT);
+
+//			command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+//			exec(command);
+//			Thread.sleep(SLEEP_TIMER_LONG * 2);
+//
+//			command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
+//					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+//
+//			exec(command);
+//			Thread.sleep(SLEEP_TIMER_SHORT);
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
-				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
-
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		return result;
+		return null;
 	}
 
 	public static void cacheServerExecute() {
-//		String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-//		exec(command);
-//		try {
-//			Thread.sleep(500);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-		String command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-		exec(command);
+		// String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE)
+		// + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile &&
+		// mvn package\"";
+		// exec(command);
+		// try {
+		// Thread.sleep(500);
+		// } catch (InterruptedException e) {
+		// e.printStackTrace();
+		// }
 		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
-				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+			String command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+			exec(command);
 
-		exec(command);
-		try {
-			Thread.sleep(500);
+			Thread.sleep(SLEEP_TIMER_LONG * 2);
+
+			command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
+					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+
+			exec(command);
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -106,68 +96,53 @@ public class DockerHelper {
 	}
 
 	public static ArrayList<String> initDCEContainer(int id) {
-		String command = "docker run -i -t -d --name " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " " + Configure.IMAGE_TAG_DCE;
-		ArrayList<String> result = exec(command);
 		try {
+			String command = "docker run -i -t -d --name " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " " + Configure.IMAGE_TAG_DCE;
+			ArrayList<String> result = exec(command);
+			Thread.sleep(500);
+			command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
+			exec(command);
+			Thread.sleep(500);
+			command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"chmod 777 /NS3Client/run.sh\"";
+			exec(command);
+
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"chmod 777 /NS3Client/run.sh\"";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		return result;
+		return null;
 	}
 
 	public static ArrayList<String> startCacheContainer() {
-		String command = "docker stop " + Configure.CONTAINER_TAG_CACHE;
-		exec(command);
-		command = "docker start " + Configure.CONTAINER_TAG_CACHE;
-		ArrayList<String> result = exec(command);
 		try {
-			Thread.sleep(500);
+			String command = "docker stop " + Configure.CONTAINER_TAG_CACHE;
+			exec(command);
+			Thread.sleep(SLEEP_TIMER_SHORT);
+			command = "docker start " + Configure.CONTAINER_TAG_CACHE;
+			ArrayList<String> result = exec(command);
+			Thread.sleep(SLEEP_TIMER_SHORT);
+			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
+			exec(command);
+
+			Thread.sleep(SLEEP_TIMER_SHORT);
+
+			command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+			exec(command);
+
+			Thread.sleep(SLEEP_TIMER_SHORT);
+
+			command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
+					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
+
+			exec(command);
+
+			Thread.sleep(SLEEP_TIMER_LONG);
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
-		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
-				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
-
-		exec(command);
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-		return result;
+		return null;
 	}
 
 	public static String getHostname() {
@@ -183,11 +158,11 @@ public class DockerHelper {
 				exec(command + i);
 				Thread.sleep(500);
 			}
-			command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			for (int i = 1; i <= Configure.getContainers(); i++) {
-				exec(command + i);
-				Thread.sleep(500);
-			}
+			// command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
+			// for (int i = 1; i <= Configure.getContainers(); i++) {
+			// exec(command + i);
+			// Thread.sleep(500);
+			// }
 		} catch (Exception e) {
 
 		}
