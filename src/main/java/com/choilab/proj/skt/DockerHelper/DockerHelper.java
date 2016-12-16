@@ -73,7 +73,7 @@ public class DockerHelper {
 			String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
 			exec(command);
 
-			Thread.sleep(SLEEP_TIMER_SHORT * 2);
+			Thread.sleep(SLEEP_TIMER_LONG * 2);
 
 			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE
 					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App "
@@ -125,11 +125,11 @@ public class DockerHelper {
 				exec(command + i);
 				Thread.sleep(500);
 			}
-			// command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			// for (int i = 1; i <= Configure.getContainers(); i++) {
-			// exec(command + i);
-			// Thread.sleep(500);
-			// }
+			 command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
+			 for (int i = 1; i <= Configure.getContainers(); i++) {
+			 exec(command + i);
+			 Thread.sleep(500);
+			 }
 		} catch (Exception e) {
 
 		}
