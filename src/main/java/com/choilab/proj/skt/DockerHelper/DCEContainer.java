@@ -20,8 +20,9 @@ public class DCEContainer {
 	private void init() {
 		ConfigUI.log("Initiate DCE Container.. " + id);
 		ArrayList<String> logs = DockerHelper.initDCEContainer(id);
-		for (String log : logs)
-			ConfigUI.log("  -" + log);
+		if (logs != null)
+			for (String log : logs)
+				ConfigUI.log("  -" + log);
 	}
 
 	public String getHostname() {
@@ -29,11 +30,11 @@ public class DCEContainer {
 			hostname = DockerHelper.getHostname();
 		return hostname;
 	}
-	
-	public void doJob(NS3Data data){
+
+	public void doJob(NS3Data data) {
 		String cacheHost = CacheContainer.hostname;
 		String args = cacheHost + " " + data.toString();
-		DockerHelper.dceTask(args,id);
+		DockerHelper.dceTask(args, id);
 	}
 
 }
