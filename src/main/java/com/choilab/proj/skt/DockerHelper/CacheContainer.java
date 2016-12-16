@@ -31,8 +31,6 @@ public class CacheContainer {
 		} else {
 			ConfigUI.log("Initiate Cache Container..");
 			ArrayList<String> logs = DockerHelper.initCacheContainer();
-			for (String log : logs)
-				ConfigUI.log("  -" + log);
 		}
 	}
 

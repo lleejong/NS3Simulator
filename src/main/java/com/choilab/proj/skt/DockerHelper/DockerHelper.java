@@ -24,10 +24,7 @@ public class DockerHelper {
 		try {
 			String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 			ArrayList<String> result = exec(command);
-			// exec(command);
-			// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
-			// /NS3CacheServer/ns3_structure.sql"
-
+		
 			Thread.sleep(SLEEP_TIMER_LONG);
 
 			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
@@ -40,12 +37,15 @@ public class DockerHelper {
 			// /NS3CacheServer/ns3_structure.sql";
 			exec(command);
 			Thread.sleep(SLEEP_TIMER_SHORT);
-
+			return result;
+			
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			ArrayList<String> list = new ArrayList<String>();
+			list.add(e.getMessage());
+			return list;
 		}
 
-		return null;
 	}
 
 	public static ArrayList<String> startCacheContainer() {
