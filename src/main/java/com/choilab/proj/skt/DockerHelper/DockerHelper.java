@@ -40,6 +40,15 @@ public class DockerHelper {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+
+		command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+		exec(command);
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE
 				+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
 
