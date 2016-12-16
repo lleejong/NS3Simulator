@@ -32,10 +32,11 @@ public class DockerHelper {
 
 			Thread.sleep(SLEEP_TIMER_LONG);
 
-			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+			command = "docker exec -i -t " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
 			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql";
 			exec(command);
+			
 			Thread.sleep(SLEEP_TIMER_SHORT);
 			return result;
 			
@@ -70,12 +71,12 @@ public class DockerHelper {
 
 	public static void cacheServerExecute() {
 		try {
-			String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-			exec(command);
+			//String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+			//exec(command);
 
 			Thread.sleep(SLEEP_TIMER_LONG * 2);
 
-			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE
+			String command = "docker exec -i -d " + Configure.CONTAINER_TAG_CACHE
 					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App "
 					+ Configure.getPort() + "\"";
 			exec(command);
