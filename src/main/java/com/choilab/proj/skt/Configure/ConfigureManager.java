@@ -44,6 +44,7 @@ public class ConfigureManager {
 					Configure.setCache(Boolean.valueOf(eElement.getElementsByTagName("cache").item(0).getTextContent()).booleanValue());
 					Configure.setType(Integer.parseInt(eElement.getElementsByTagName("type").item(0).getTextContent()));
 					Configure.setContainers(Integer.parseInt(eElement.getElementsByTagName("containers").item(0).getTextContent()));
+					Configure.setContainers(Integer.parseInt(eElement.getElementsByTagName("port").item(0).getTextContent()));
 
 					//System.out.println("ID : " + eElement.getAttribute("id"));
 					//System.out.println("Cache : " + eElement.getElementsByTagName("cache").item(0).getTextContent());

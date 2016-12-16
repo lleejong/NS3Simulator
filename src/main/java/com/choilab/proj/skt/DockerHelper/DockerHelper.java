@@ -59,25 +59,16 @@ public class DockerHelper {
 	}
 
 	public static void cacheServerExecute() {
-		// String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE)
-		// + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile &&
-		// mvn package\"";
-		// exec(command);
-		// try {
-		// Thread.sleep(500);
-		// } catch (InterruptedException e) {
-		// e.printStackTrace();
-		// }
 		try {
-			String command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
+			String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
 			exec(command);
 
-			Thread.sleep(SLEEP_TIMER_LONG * 2);
+			Thread.sleep(SLEEP_TIMER_SHORT * 2);
 
-			command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
-					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
-
+			command = "docker exec -d " + Configure.CONTAINER_TAG_CACHE
+					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App " + Configure.getPort() + "\"";
 			exec(command);
+			Thread.sleep(SLEEP_TIMER_LONG);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -125,18 +116,6 @@ public class DockerHelper {
 			exec(command);
 
 			Thread.sleep(SLEEP_TIMER_SHORT);
-
-			command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-			exec(command);
-
-			Thread.sleep(SLEEP_TIMER_SHORT);
-
-			command = "docker exec -i -t -d " + Configure.CONTAINER_TAG_CACHE
-					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App\"";
-
-			exec(command);
-
-			Thread.sleep(SLEEP_TIMER_LONG);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
