@@ -46,13 +46,13 @@ public class Executor {
 
 		
 		// 5. JobScheduler
-//		ArrayList<Job> jobList = JobConverterFromFile.readXML();
-//		for(Job newJob : jobList)
-//			try {
-//				jobScheduler.newJob(newJob);
-//			} catch (Exception e) {
-//				ConfigUI.log(e.getMessage());
-//			}
+		ArrayList<Job> jobList = JobConverterFromFile.readXML();
+		for(Job newJob : jobList)
+			try {
+				jobScheduler.newJob(newJob);
+			} catch (Exception e) {
+				ConfigUI.log(e.getMessage());
+			}
 	}
 
 	public static void main(String[] args) throws InterruptedException {
