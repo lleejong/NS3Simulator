@@ -83,7 +83,7 @@ public class DockerHelper {
 
 	private static ArrayList<String> exec(String command) {
 		try {
-			System.out.println(command);
+			System.out.println("----"+command);
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
