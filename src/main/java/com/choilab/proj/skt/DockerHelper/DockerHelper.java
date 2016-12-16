@@ -25,6 +25,7 @@ public class DockerHelper {
 		exec(command);
 		//docker exec -i -t ns3-dce-cache bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql"
 		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+		//docker exec -i dce-cache /bin/bash -c "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
 		exec(command);
 		return result;
 	}
@@ -38,6 +39,8 @@ public class DockerHelper {
 	public static ArrayList<String> initDCEContainer(int id) {
 		String command = "docker run -i -t -d --name "+ (Configure.CONTAINER_TAG_DCE_PREFIX+id) + " " + Configure.IMAGE_TAG_DCE;
 		ArrayList<String> result = exec(command);
+		command = "docker exec -i "+ (Configure.CONTAINER_TAG_DCE_PREFIX+id) +" /bin/bash \"chmod 777 /NS3Client/run.sh\"";
+		exec(command);
 		return result;
 	}
 	
