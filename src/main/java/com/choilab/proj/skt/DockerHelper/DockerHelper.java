@@ -21,7 +21,7 @@ public class DockerHelper {
 	public static ArrayList<String> initCacheContainer() {
 		String command = "docker run -i -t -d --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 		ArrayList<String> result = exec(command);
-		command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
+		command = "docker exec -i -p 6789:6789 " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
 		exec(command);
 		// docker exec -i -t ns3-dce-cache bash -c "mysql -uroot <
 		// /NS3CacheServer/ns3_structure.sql"
