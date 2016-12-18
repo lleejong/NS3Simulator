@@ -231,29 +231,6 @@ public class DockerHelper {
 					}
 				}
 			}).start();
-			
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-
-						String line;
-						BufferedReader reader = new BufferedReader(new InputStreamReader(es));
-						while ((line = reader.readLine()) != null) {
-							System.out.println(line);
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					} finally {
-						if (is != null) {
-							try {
-								is.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}).start();
 			process.waitFor();
 			System.out.println(command);
 
@@ -276,7 +253,6 @@ public class DockerHelper {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
