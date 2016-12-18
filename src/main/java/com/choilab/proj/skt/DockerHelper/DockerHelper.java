@@ -84,7 +84,7 @@ public class DockerHelper {
 			// /NS3CacheServer/ns3_structure.sql";
 			exec(cmdArr);
 
-			Thread.sleep(SLEEP_TIMER_LONG * 2);
+			Thread.sleep(SLEEP_TIMER_LONG);
 
 			// command = "docker exec -d " + Configure.CONTAINER_TAG_CACHE
 			// + " /bin/bash -c \"cd /NS3CacheServer && java -cp
@@ -108,7 +108,7 @@ public class DockerHelper {
 			cmd.add(Configure.CONTAINER_TAG_CACHE);
 			cmd.add("/bin/bash");
 			cmd.add("-c");
-			cmd.add("\"java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar com.choilab.proj.skt.App "
+			cmd.add("\"cd /NS3CacheServer && java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar com.choilab.proj.skt.App "
 					+ (Configure.getPort() + "") + " " + (Configure.isCache() + "") + " " + (Configure.getType() + "") + "\"");
 			// cmd.add("java");
 			// cmd.add("-cp");
@@ -118,7 +118,6 @@ public class DockerHelper {
 			// cmd.add(Configure.isCache() + "");
 			// cmd.add(Configure.getType() + "");
 
-			// System.out.println(Configure.isCache() + "");
 			exec(cmd);
 			Thread.sleep(SLEEP_TIMER_LONG);
 
@@ -192,7 +191,7 @@ public class DockerHelper {
 		return cacheImg & dceImg;
 	}
 
-	private static ArrayList<String> exec(String command) {
+	private static synchronized ArrayList<String> exec(String command) {
 		try {
 			System.out.println("----" + command);
 			Process process = Runtime.getRuntime().exec(command);
@@ -234,7 +233,7 @@ public class DockerHelper {
 		return null;
 	}
 
-	private static ArrayList<String> exec(String[] command) {
+	private static synchronized ArrayList<String> exec(String[] command) {
 		try {
 			System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
@@ -276,7 +275,7 @@ public class DockerHelper {
 		return null;
 	}
 
-	private static void exec(List<String> cmd) {
+	private static synchronized void exec(List<String> cmd) {
 		try {
 
 			ProcessBuilder pb = new ProcessBuilder(cmd);
