@@ -206,6 +206,7 @@ public class DockerHelper {
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
+			final InputStream es = process.getErrorStream();
 
 			new Thread(new Runnable() {
 				public void run() {
@@ -215,6 +216,29 @@ public class DockerHelper {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
 							executionResult.add(line);
+							System.out.println(line);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if (is != null) {
+							try {
+								is.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}).start();
+			
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+
+						String line;
+						BufferedReader reader = new BufferedReader(new InputStreamReader(es));
+						while ((line = reader.readLine()) != null) {
 							System.out.println(line);
 						}
 					} catch (IOException e) {
