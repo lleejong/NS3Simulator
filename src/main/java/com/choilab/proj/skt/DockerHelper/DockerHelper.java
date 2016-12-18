@@ -100,16 +100,23 @@ public class DockerHelper {
 			// "com.choilab.proj.skt.App",
 			// Configure.getPort() + "", Configure.isCache() + "",
 			// Configure.getType() + "" };
-			List<String> cmd = new ArrayList<String>();
+			
+			String command2 = "cd /NS3CacheServer && ./run.sh " + Configure.getPort() + " " + Configure.isCache() + " " + Configure.getType();
+			String[] cmdArr2 = {"docker","exec","-d",Configure.CONTAINER_TAG_CACHE, "/bin/sh","-c", command2};
+			
+			//List<String> cmd = new ArrayList<String>();
 
-			cmd.add("docker");
-			cmd.add("exec");
-			cmd.add("-d");
-			cmd.add(Configure.CONTAINER_TAG_CACHE);
-			cmd.add("/bin/bash");
-			cmd.add("-c");
-			cmd.add("\"cd /NS3CacheServer && java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar com.choilab.proj.skt.App "
-					+ (Configure.getPort() + "") + " " + (Configure.isCache() + "") + " " + (Configure.getType() + "") + "\"");
+			// cmd.add("docker");
+			// cmd.add("exec");
+			// cmd.add("-d");
+			// cmd.add(Configure.CONTAINER_TAG_CACHE);
+			// cmd.add("/bin/bash");
+			// cmd.add("-c");
+			// cmd.add("\"cd /NS3CacheServer && java -cp
+			// ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar
+			// com.choilab.proj.skt.App "
+			// + (Configure.getPort() + "") + " " + (Configure.isCache() + "") +
+			// " " + (Configure.getType() + "") + "\"");
 			// cmd.add("java");
 			// cmd.add("-cp");
 			// cmd.add("./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar");
@@ -118,7 +125,7 @@ public class DockerHelper {
 			// cmd.add(Configure.isCache() + "");
 			// cmd.add(Configure.getType() + "");
 
-			exec(cmd);
+			exec(cmdArr2);
 			Thread.sleep(SLEEP_TIMER_LONG);
 
 		} catch (InterruptedException e) {
