@@ -32,14 +32,14 @@ public class Executor {
 		
 		DockerHelper.cacheServerExecute();
 		
-		ArrayList<DCEContainer> dceContainers = new ArrayList<DCEContainer>();
-		
-		DockerHelper.dceInit();
-		for(int i = 0; i < Configure.getContainers(); i++){
-			dceContainers.add(new DCEContainer());
-		}
-		
-		JobScheduler jobScheduler = new JobScheduler(dceContainers);
+//		ArrayList<DCEContainer> dceContainers = new ArrayList<DCEContainer>();
+//		
+//		DockerHelper.dceInit();
+//		for(int i = 0; i < Configure.getContainers(); i++){
+//			dceContainers.add(new DCEContainer());
+//		}
+//		
+//		JobScheduler jobScheduler = new JobScheduler(dceContainers);
 		
 		// 4-2. Configure에 정의된 만큼 Container 생성
 		// 4-3. Thread당 하나의 Container 매칭

@@ -79,7 +79,7 @@ public class DockerHelper {
 			// " /bin/bash -c \"mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql\"";
 			String command = "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
-			String[] cmdArr = { "docker", "exec", Configure.CONTAINER_TAG_CACHE, "/bin/sh", "-c", command };
+			String[] cmdArr = { "docker", "exec", "-d",Configure.CONTAINER_TAG_CACHE, "/bin/sh", "-c", command };
 			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql";
 			exec(cmdArr);
