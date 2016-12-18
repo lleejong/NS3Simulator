@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -272,6 +273,8 @@ public class DockerHelper {
 		try {
 
 			ProcessBuilder pb = new ProcessBuilder(cmd);
+			pb.redirectError(Redirect.INHERIT);
+			pb.redirectOutput(Redirect.INHERIT);
 			Process process = pb.start();
 			process.waitFor();
 		} catch (InterruptedException e) {
