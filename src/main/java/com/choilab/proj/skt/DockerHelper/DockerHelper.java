@@ -156,9 +156,9 @@ public class DockerHelper {
 			String command = "docker run -i -t -d --name " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " " + Configure.IMAGE_TAG_DCE;
 			ArrayList<String> result = exec(command);
 			Thread.sleep(SLEEP_TIMER_SHORT);
-			command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
-			exec(command);
-			Thread.sleep(SLEEP_TIMER_LONG * 2);
+			//command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
+			//exec(command);
+			//Thread.sleep(SLEEP_TIMER_LONG * 2);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
