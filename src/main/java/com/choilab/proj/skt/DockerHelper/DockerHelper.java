@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.choilab.proj.skt.Configure.Configure;
 
@@ -22,9 +23,9 @@ public class DockerHelper {
 
 	public static ArrayList<String> initCacheContainer() {
 		try {
-			String command = "docker run -i -t -d -p "+ Configure.getPort()+":"+Configure.getPort() + " --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
+			String command = "docker run -i -t -d -p " + Configure.getPort() + ":" + Configure.getPort() + " --name " + Configure.CONTAINER_TAG_CACHE + " " + Configure.IMAGE_TAG_CACHE;
 			ArrayList<String> result = exec(command);
-		
+
 			Thread.sleep(SLEEP_TIMER_LONG);
 
 			command = "docker exec -i " + Configure.CONTAINER_TAG_CACHE + " /bin/bash service mysql start";
@@ -33,9 +34,9 @@ public class DockerHelper {
 			Thread.sleep(SLEEP_TIMER_SHORT);
 
 			return result;
-			
+
 		} catch (InterruptedException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 			ArrayList<String> list = new ArrayList<String>();
 			list.add(e.getMessage());
 			return list;
@@ -66,24 +67,45 @@ public class DockerHelper {
 
 	public static void cacheServerExecute() {
 		try {
-			//String command = "docker exec -i " + (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd /NS3CacheServer && git pull && mvn compile && mvn package\"";
-			//exec(command);
+			// String command = "docker exec -i " +
+			// (Configure.CONTAINER_TAG_CACHE) + " /bin/bash -c \"cd
+			// /NS3CacheServer && git pull && mvn compile && mvn package\"";
+			// exec(command);
 
-			//Thread.sleep(SLEEP_TIMER_LONG * 2);
-			
-			String command = "docker exec " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+			// Thread.sleep(SLEEP_TIMER_LONG * 2);
+
+			//String command = "docker exec " + Configure.CONTAINER_TAG_CACHE + " /bin/bash -c \"mysql -uroot < /NS3CacheServer/ns3_structure.sql\"";
+			String command = "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
+			String[] cmdArr = {"docker", "exec", Configure.CONTAINER_TAG_CACHE, "/bin/sh","-c", command};
 			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql";
-			exec(command);
-			
-			Thread.sleep(SLEEP_TIMER_LONG * 2);
-			
-			
+			exec(cmdArr);
 
-			command = "docker exec -d " + Configure.CONTAINER_TAG_CACHE
-					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App "
-					+ Configure.getPort() + "\"";
-			exec(command);
+			Thread.sleep(SLEEP_TIMER_LONG * 2);
+
+//			command = "docker exec -d " + Configure.CONTAINER_TAG_CACHE
+//					+ " /bin/bash -c \"cd /NS3CacheServer &&  java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:\"/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar\" com.choilab.proj.skt.App "
+//					+ Configure.getPort() + " " + Configure.isCache() + " " + Configure.getType() + "\"";
+			
+			List<String> cmd = new ArrayList<String>();
+
+			cmd.add("docker");
+			cmd.add("exec");
+			cmd.add("-i");
+			cmd.add("-t");
+			cmd.add("-d");
+			cmd.add(Configure.CONTAINER_TAG_CACHE);
+			cmd.add("/bin/bash");
+			cmd.add("-c");
+			cmd.add("java");
+			cmd.add("-cp");
+			cmd.add("./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar");
+			cmd.add("com.choilab.proj.skt.App");
+			cmd.add(Configure.getPort() + "");
+			cmd.add(Configure.isCache() + "");
+			cmd.add(Configure.getType() + "");
+			
+			exec(cmd);
 			Thread.sleep(SLEEP_TIMER_LONG);
 
 		} catch (InterruptedException e) {
@@ -110,7 +132,7 @@ public class DockerHelper {
 			command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
 			exec(command);
 			Thread.sleep(SLEEP_TIMER_LONG * 2);
-			
+
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -130,11 +152,11 @@ public class DockerHelper {
 				exec(command + i);
 				Thread.sleep(500);
 			}
-			 command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
-			 for (int i = 1; i <= Configure.getContainers(); i++) {
-			 exec(command + i);
-			 Thread.sleep(500);
-			 }
+			command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
+			for (int i = 1; i <= Configure.getContainers(); i++) {
+				exec(command + i);
+				Thread.sleep(500);
+			}
 		} catch (Exception e) {
 
 		}
@@ -196,6 +218,61 @@ public class DockerHelper {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	private static ArrayList<String> exec(String[] command) {
+		try {
+			System.out.println("----" + command.toString());
+			Process process = Runtime.getRuntime().exec(command);
+			final InputStream is = process.getInputStream();
+			executionResult = new ArrayList<String>();
+
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+
+						String line;
+						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+						while ((line = reader.readLine()) != null) {
+							executionResult.add(line);
+							System.out.println(line);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if (is != null) {
+							try {
+								is.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}).start();
+			process.waitFor();
+			System.out.println(command);
+
+			return executionResult;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private static void exec(List<String> cmd) {
+		try {
+
+			ProcessBuilder pb = new ProcessBuilder(cmd);
+			Process process = pb.start();
+			process.waitFor();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public static ArrayList<String> getContainerList() {
