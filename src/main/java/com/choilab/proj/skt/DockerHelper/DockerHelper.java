@@ -92,7 +92,7 @@ public class DockerHelper {
 			// + Configure.getPort() + " " + Configure.isCache() + " " +
 			// Configure.getType() + "\"";
 
-			String[] cmdArr2 = { "docker", "exec", "-i", "-d", Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", "java", "-cp",
+			String[] cmdArr2 = { "docker", "exec", "-i", "-d", Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", "cd", "/NS3CacheServer","&&","java", "-cp",
 					"./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar", "com.choilab.proj.skt.App",
 					Configure.getPort() + "", Configure.isCache() + "", Configure.getType() + "" };
 			// List<String> cmd = new ArrayList<String>();
