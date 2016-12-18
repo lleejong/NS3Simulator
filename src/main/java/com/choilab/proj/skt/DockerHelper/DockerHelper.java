@@ -93,25 +93,32 @@ public class DockerHelper {
 			// + Configure.getPort() + " " + Configure.isCache() + " " +
 			// Configure.getType() + "\"";
 
-			//String[] cmdArr2 = { "docker", "exec", "-i", "-d", Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", "cd /NS3CacheServer &&", "java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar", "com.choilab.proj.skt.App",
-					//Configure.getPort() + "", Configure.isCache() + "", Configure.getType() + "" };
-			 List<String> cmd = new ArrayList<String>();
-			
-			 cmd.add("docker");
-			 cmd.add("exec");
-			 cmd.add("-d");
-			 cmd.add(Configure.CONTAINER_TAG_CACHE);
-			 cmd.add("/bin/bash");
-			 cmd.add("-c");
-			 cmd.add("java");
-			 cmd.add("-cp");
-			 cmd.add("./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar");
-			 cmd.add("com.choilab.proj.skt.App");
-			 cmd.add(Configure.getPort() + "");
-			 cmd.add(Configure.isCache() + "");
-			 cmd.add(Configure.getType() + "");
+			// String[] cmdArr2 = { "docker", "exec", "-i", "-d",
+			// Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", "cd
+			// /NS3CacheServer &&", "java -cp
+			// ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar",
+			// "com.choilab.proj.skt.App",
+			// Configure.getPort() + "", Configure.isCache() + "",
+			// Configure.getType() + "" };
+			List<String> cmd = new ArrayList<String>();
 
-			//System.out.println(Configure.isCache() + "");
+			cmd.add("docker");
+			cmd.add("exec");
+			cmd.add("-d");
+			cmd.add(Configure.CONTAINER_TAG_CACHE);
+			cmd.add("/bin/bash");
+			cmd.add("-c");
+			cmd.add("\"java -cp ./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar com.choilab.proj.skt.App "
+					+ (Configure.getPort() + "") + " " + (Configure.isCache() + "") + " " + (Configure.getType() + "") + "\"");
+			// cmd.add("java");
+			// cmd.add("-cp");
+			// cmd.add("./target/NS3CacheServer-0.0.1-SNAPSHOT.jar:/root/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar");
+			// cmd.add("com.choilab.proj.skt.App");
+			// cmd.add(Configure.getPort() + "");
+			// cmd.add(Configure.isCache() + "");
+			// cmd.add(Configure.getType() + "");
+
+			// System.out.println(Configure.isCache() + "");
 			exec(cmd);
 			Thread.sleep(SLEEP_TIMER_LONG);
 
