@@ -33,6 +33,14 @@ public class DockerHelper {
 			exec(command);
 
 			Thread.sleep(SLEEP_TIMER_SHORT);
+			
+			command = "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
+			String[] cmdArr = { "docker", "exec", "-d",Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", command };
+			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
+			// /NS3CacheServer/ns3_structure.sql";
+			exec(cmdArr);
+
+			Thread.sleep(SLEEP_TIMER_LONG);
 
 			return result;
 
@@ -78,13 +86,7 @@ public class DockerHelper {
 			// String command = "docker exec " + Configure.CONTAINER_TAG_CACHE +
 			// " /bin/bash -c \"mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql\"";
-			String command = "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
-			String[] cmdArr = { "docker", "exec", "-d",Configure.CONTAINER_TAG_CACHE, "/bin/sh", "-c", command };
-			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
-			// /NS3CacheServer/ns3_structure.sql";
-			exec(cmdArr);
-
-			Thread.sleep(SLEEP_TIMER_LONG);
+			
 
 			// command = "docker exec -d " + Configure.CONTAINER_TAG_CACHE
 			// + " /bin/bash -c \"cd /NS3CacheServer && java -cp
@@ -102,7 +104,7 @@ public class DockerHelper {
 			// Configure.getType() + "" };
 			
 			String command2 = "cd /NS3CacheServer && ./run.sh " + Configure.getPort() + " " + Configure.isCache() + " " + Configure.getType();
-			String[] cmdArr2 = {"docker","exec","-d",Configure.CONTAINER_TAG_CACHE, "/bin/sh","-c", command2};
+			String[] cmdArr2 = {"docker","exec","-d",Configure.CONTAINER_TAG_CACHE, "/bin/bash","-c", command2};
 			
 			//List<String> cmd = new ArrayList<String>();
 
