@@ -136,10 +136,15 @@ public class DockerHelper {
 	}
 
 	public static void dceTask(String args, int containerID) {
-		String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
-				+ " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
+
+		//String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
+				//+ " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
 		// ArrayList<String> result = exec(command);
-		ArrayList<String> result = exec(command);
+		
+		String command = "cd /NS3Client && ./run.sh " + args;
+		String[] cmdArr = {"docker","exec","-i",Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash","-c", command};
+		
+		ArrayList<String> result = exec(cmdArr);
 		for (String log : result) {
 			System.out.println(log);
 		}
