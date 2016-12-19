@@ -237,7 +237,7 @@ public class DockerHelper {
 			}).start();
 			process.waitFor();
 
-			return executionResult;
+			return new ArrayList<String>(executionResult);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
