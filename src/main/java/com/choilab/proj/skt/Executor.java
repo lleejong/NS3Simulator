@@ -48,6 +48,7 @@ public class Executor {
 		ArrayList<Job> jobList = JobConverterFromFile.readXML();
 		for (Job newJob : jobList)
 			try {
+				System.out.println("AA");
 				jobScheduler.newJob(newJob);
 			} catch (Exception e) {
 				//ConfigUI.log(e.getMessage());
