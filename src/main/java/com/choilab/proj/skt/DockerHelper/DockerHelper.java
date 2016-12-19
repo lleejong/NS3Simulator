@@ -34,9 +34,9 @@ public class DockerHelper {
 			exec(command);
 
 			Thread.sleep(SLEEP_TIMER_SHORT);
-			
+
 			command = "mysql -uroot < /NS3CacheServer/ns3_structure.sql";
-			String[] cmdArr = { "docker", "exec", "-d",Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", command };
+			String[] cmdArr = { "docker", "exec", "-d", Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", command };
 			// docker exec -i dce-cache /bin/bash -c "mysql -uroot <
 			// /NS3CacheServer/ns3_structure.sql";
 			exec(cmdArr);
@@ -77,17 +77,16 @@ public class DockerHelper {
 
 	public static void cacheServerExecute() {
 		try {
-						
+
 			String command = "cd /NS3CacheServer && git pull && mvn compile && mvn package";
-			String[] cmdArr = {"docker","exec","-i",(Configure.CONTAINER_TAG_CACHE), "/bin/bash","-c", command};
+			String[] cmdArr = { "docker", "exec", "-i", (Configure.CONTAINER_TAG_CACHE), "/bin/bash", "-c", command };
 			exec(cmdArr);
 			Thread.sleep(SLEEP_TIMER_LONG);
-			
+
 			String command2 = "cd /NS3CacheServer && ./run.sh " + Configure.getPort() + " " + Configure.isCache() + " " + Configure.getType();
-			String[] cmdArr2 = {"docker","exec","-d",Configure.CONTAINER_TAG_CACHE, "/bin/bash","-c", command2};
+			String[] cmdArr2 = { "docker", "exec", "-d", Configure.CONTAINER_TAG_CACHE, "/bin/bash", "-c", command2 };
 			exec(cmdArr2);
 			Thread.sleep(SLEEP_TIMER_LONG);
-			
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -96,16 +95,19 @@ public class DockerHelper {
 
 	public static void dceTask(String args, int containerID) {
 
-		//String command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
-				//+ " /bin/bash -c \"cd /NS3Client &&  java -cp ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " + args + "\"";
+		// String command = "docker exec -i " +
+		// (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
+		// + " /bin/bash -c \"cd /NS3Client && java -cp
+		// ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " +
+		// args + "\"";
 		// ArrayList<String> result = exec(command);
-		
+
 		String command = "cd /NS3Client && ./run.sh " + args;
-		String[] cmdArr = {"docker","exec","-i",Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash","-c", command};
-		
+		String[] cmdArr = { "docker", "exec", "-i", Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash", "-c", command };
+
 		ArrayList<String> result = dceExec(cmdArr);
 		for (String log : result) {
-			//System.out.println(log);
+			// System.out.println(log);
 			ConfigUI.log(log);
 		}
 
@@ -116,14 +118,16 @@ public class DockerHelper {
 			String command = "docker run -i -t -d --name " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " " + Configure.IMAGE_TAG_DCE;
 			ArrayList<String> result = exec(command);
 			Thread.sleep(SLEEP_TIMER_SHORT);
-			
-String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
-			String[] cmdArr = {"docker","exec","-i",(Configure.CONTAINER_TAG_DCE_PREFIX + id), "/bin/bash","-c", command2};
-			exec(cmdArr);
-			
-			//command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
-			//exec(command);
-			//Thread.sleep(SLEEP_TIMER_LONG * 2);
+
+//			String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
+//			String[] cmdArr = { "docker", "exec", "-i", (Configure.CONTAINER_TAG_DCE_PREFIX + id), "/bin/bash", "-c", command2 };
+//			exec(cmdArr);
+
+			// command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX
+			// + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile
+			// && mvn package\"";
+			// exec(command);
+			// Thread.sleep(SLEEP_TIMER_LONG * 2);
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -172,7 +176,7 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 
 	private static synchronized ArrayList<String> exec(String command) {
 		try {
-			//System.out.println("----" + command);
+			System.out.println("----" + command);
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -186,7 +190,7 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
 							executionResult.add(line);
-							//System.out.println(line);
+							System.out.println(line);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -214,7 +218,7 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 
 	private static synchronized ArrayList<String> exec(String[] command) {
 		try {
-			//System.out.println("----" + command.toString());
+			System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -225,7 +229,7 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
-							//executionResult.add(line);
+							executionResult.add(line);
 							System.out.println(line);
 						}
 					} catch (IOException e) {
@@ -251,9 +255,10 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 		}
 		return null;
 	}
+
 	private static synchronized ArrayList<String> dceExec(String[] command) {
 		try {
-			//System.out.println("----" + command.toString());
+			// System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -264,8 +269,8 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
-							//executionResult.add(line);
-							//System.out.println(line);
+							// executionResult.add(line);
+							System.out.println(line);
 							ConfigUI.log(line);
 						}
 					} catch (IOException e) {
