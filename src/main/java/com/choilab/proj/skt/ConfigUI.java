@@ -144,7 +144,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 				// JOptionPane.showMessageDialog(this, "이걸 고치면 됨!!"); // RUN @@@
 				Configure.setCache(rb1.isSelected());
 				Configure.setContainers(Integer.parseInt(txtCon.getText()));
-				Configure.setContainers(Integer.parseInt(txtType.getText()));
+				Configure.setType(Integer.parseInt(txtType.getText()));
 				isRunning = true;
 				buttonRun.setEnabled(false);
 				Executor.run();

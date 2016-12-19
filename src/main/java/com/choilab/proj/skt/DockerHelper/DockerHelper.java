@@ -8,6 +8,7 @@ import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.choilab.proj.skt.ConfigUI;
 import com.choilab.proj.skt.Configure.Configure;
 
 public class DockerHelper {
@@ -146,7 +147,8 @@ public class DockerHelper {
 		
 		ArrayList<String> result = exec(cmdArr);
 		for (String log : result) {
-			System.out.println(log);
+			//System.out.println(log);
+			ConfigUI.log(log);
 		}
 
 	}
@@ -207,7 +209,7 @@ public class DockerHelper {
 
 	private static synchronized ArrayList<String> exec(String command) {
 		try {
-			System.out.println("----" + command);
+			//System.out.println("----" + command);
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -221,7 +223,7 @@ public class DockerHelper {
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
 							executionResult.add(line);
-							System.out.println(line);
+							//System.out.println(line);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -250,7 +252,7 @@ public class DockerHelper {
 
 	private static synchronized ArrayList<String> exec(String[] command) {
 		try {
-			System.out.println("----" + command.toString());
+			//System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -261,7 +263,7 @@ public class DockerHelper {
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
-							executionResult.add(line);
+							//executionResult.add(line);
 							System.out.println(line);
 						}
 					} catch (IOException e) {

@@ -39,7 +39,7 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.2.1</version>
 				<configuration>
-					<mainClass>com.choilab.proj.skt.App</mainClass>
+					<mainClass>com.choilab.proj.skt.Executor</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
