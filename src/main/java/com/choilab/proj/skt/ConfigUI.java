@@ -122,9 +122,21 @@ public class ConfigUI extends JFrame implements ActionListener {
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(true);
+		textArea.append("---txLoss : 0.0 , txDelay : 751.0 , txJitter : 57.0 , rxLoss : 0.0, rxDelay : 751.0, rxJitter : 57.0");
+		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps");
+		textArea.append("Elapsed Time : 129.788 sec.");
+		
+		textArea.append("---txLoss : 0.0 , txDelay : 768.0 , txJitter : 81.0 , rxLoss : 0.0, rxDelay : 724.0, rxJitter : 9.0");
+		textArea.append("---[HIT] Througput from Server : 118 Mbps");
+		textArea.append("Elapsed Time : 0.373 sec.");
+		
 		textArea.append("---txLoss : 0.0 , txDelay : 788.0 , txJitter : 118.0 , rxLoss : 0.0, rxDelay : 759.0, rxJitter : 68.0");
-		textArea.append("--[MISS] Throughput from DCE : 1.05 Mbps ");
-		textArea.append("");
+		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps");
+		textArea.append("Elapsed Time : 139.788 sec.");
+		
+		textArea.append("---txLoss : 0.0 , txDelay : 787.0 , txJitter : 111.0 , rxLoss : 0.0, rxDelay : 726.0, rxJitter : 19.0");
+		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps");
+		textArea.append("Elapsed Time : 157.138 sec.");
 
 		contentPane.add(infoScroll, BorderLayout.CENTER);
 
