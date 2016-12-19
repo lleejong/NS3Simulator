@@ -121,7 +121,11 @@ public class ConfigUI extends JFrame implements ActionListener {
 		textArea.setCaretPosition(textArea.getText().length());
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
-		textArea.setEditable(false);
+		textArea.setEditable(true);
+		textArea.append("---txLoss : 0.0 , txDelay : 788.0 , txJitter : 118.0 , rxLoss : 0.0, rxDelay : 759.0, rxJitter : 68.0");
+		textArea.append("--[MISS] Throughput from DCE : 1.05 Mbps ");
+		textArea.append("");
+
 		contentPane.add(infoScroll, BorderLayout.CENTER);
 
 		// BOTTON

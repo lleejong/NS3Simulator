@@ -119,9 +119,9 @@ public class DockerHelper {
 			ArrayList<String> result = exec(command);
 			Thread.sleep(SLEEP_TIMER_SHORT);
 
-//			String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
-//			String[] cmdArr = { "docker", "exec", "-i", (Configure.CONTAINER_TAG_DCE_PREFIX + id), "/bin/bash", "-c", command2 };
-//			exec(cmdArr);
+			String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
+			String[] cmdArr = { "docker", "exec", "-i", (Configure.CONTAINER_TAG_DCE_PREFIX + id), "/bin/bash", "-c", command2 };
+			exec(cmdArr);
 
 			// command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX
 			// + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile
