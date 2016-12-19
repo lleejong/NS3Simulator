@@ -23,6 +23,7 @@ public class JobHandler implements Runnable{
 				Job job = queue.dequeue();
 				container.doJob(job.getNS3Data());
 			}catch(InterruptedException e ){
+				System.out.println("" + id + " container stopped.");
 				stop();
 			}
 		}

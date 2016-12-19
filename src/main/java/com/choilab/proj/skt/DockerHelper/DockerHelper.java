@@ -243,7 +243,6 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 				}
 			}).start();
 			process.waitFor();
-			System.out.println(command);
 
 			return executionResult;
 		} catch (IOException e) {
