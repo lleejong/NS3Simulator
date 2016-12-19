@@ -161,7 +161,7 @@ public class DockerHelper {
 			
 			String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 			String[] cmdArr = {"docker","exec","-i",(Configure.CONTAINER_TAG_DCE_PREFIX + id), "/bin/bash","-c", command2};
-			exec(command);
+			exec(cmdArr);
 			
 			//command = "docker exec -i " + (Configure.CONTAINER_TAG_DCE_PREFIX + id) + " /bin/bash -c \"cd /NS3Client && git pull && mvn compile && mvn package\"";
 			//exec(command);
