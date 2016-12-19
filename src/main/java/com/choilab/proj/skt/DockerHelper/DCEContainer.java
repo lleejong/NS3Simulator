@@ -38,7 +38,8 @@ public class DCEContainer {
 		long startTime = System.currentTimeMillis();
 		DockerHelper.dceTask(args, id);
 		long endTime = System.currentTimeMillis();
-		ConfigUI.log("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
+		//ConfigUI.log("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
+		System.out.println("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
 	}
 
 }
