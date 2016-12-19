@@ -103,7 +103,7 @@ public class DockerHelper {
 		String command = "cd /NS3Client && ./run.sh " + args;
 		String[] cmdArr = {"docker","exec","-i",Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash","-c", command};
 		
-		ArrayList<String> result = exec(cmdArr);
+		ArrayList<String> result = dceExec(cmdArr);
 		for (String log : result) {
 			//System.out.println(log);
 			ConfigUI.log(log);
@@ -202,7 +202,6 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 				}
 			}).start();
 			process.waitFor();
-			System.out.println(command);
 
 			return executionResult;
 		} catch (IOException e) {
@@ -228,6 +227,46 @@ String command2 = "cd /NS3Client && git pull && mvn compile && mvn package";
 						while ((line = reader.readLine()) != null) {
 							//executionResult.add(line);
 							System.out.println(line);
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						if (is != null) {
+							try {
+								is.close();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}).start();
+			process.waitFor();
+
+			return executionResult;
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	private static synchronized ArrayList<String> dceExec(String[] command) {
+		try {
+			//System.out.println("----" + command.toString());
+			Process process = Runtime.getRuntime().exec(command);
+			final InputStream is = process.getInputStream();
+			executionResult = new ArrayList<String>();
+
+			new Thread(new Runnable() {
+				public void run() {
+					try {
+						String line;
+						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+						while ((line = reader.readLine()) != null) {
+							//executionResult.add(line);
+							//System.out.println(line);
+							ConfigUI.log(line);
 						}
 					} catch (IOException e) {
 						e.printStackTrace();

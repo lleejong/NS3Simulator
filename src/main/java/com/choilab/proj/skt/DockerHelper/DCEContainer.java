@@ -35,7 +35,10 @@ public class DCEContainer {
 	public void doJob(NS3Data data) {
 		String cacheHost = CacheContainer.hostname;
 		String args = cacheHost + " " + Configure.getPort() + " " +data.toString();
+		long startTime = System.currentTimeMillis();
 		DockerHelper.dceTask(args, id);
+		long endTime = System.currentTimeMillis();
+		ConfigUI.log("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
 	}
 
 }
