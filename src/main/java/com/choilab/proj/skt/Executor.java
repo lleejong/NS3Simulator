@@ -10,7 +10,7 @@ import com.choilab.proj.skt.DockerHelper.CacheContainer;
 import com.choilab.proj.skt.DockerHelper.DCEContainer;
 import com.choilab.proj.skt.DockerHelper.DockerHelper;
 import com.choilab.proj.skt.Job.Job;
-import com.choilab.proj.skt.Job.JobConverterFromFile;
+import com.choilab.proj.skt.Job.JobConverterFromCSV;
 import com.choilab.proj.skt.Job.JobScheduler;
 
 public class Executor {
@@ -45,7 +45,8 @@ public class Executor {
 		// 4-3. Thread당 하나의 Container 매칭
 
 		// 5. JobScheduler
-		ArrayList<Job> jobList = JobConverterFromFile.readXML();
+		//ArrayList<Job> jobList = JobConverterFromFile.readXML();
+		ArrayList<Job> jobList = JobConverterFromCSV.read("./xml/sample1.csv");
 		for (Job newJob : jobList)
 			try {
 				jobScheduler.newJob(newJob);
