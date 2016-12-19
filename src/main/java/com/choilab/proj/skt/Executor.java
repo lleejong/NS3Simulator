@@ -60,13 +60,13 @@ public class Executor {
 
 		// 2. UI를 통해 configure 수정
 
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new ConfigUI();
-			}
-		});
+//		SwingUtilities.invokeLater(new Runnable() {
+//			public void run() {
+//				new ConfigUI();
+//			}
+//		});
 
-		//Executor.run();
+		Executor.run();
 
 	}
 }
