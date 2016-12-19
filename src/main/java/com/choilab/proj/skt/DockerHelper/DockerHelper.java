@@ -137,7 +137,8 @@ public class DockerHelper {
 				exec(command + i);
 				Thread.sleep(500);
 			}
-			command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
+			command = "docker start " + Configure.CONTAINER_TAG_DCE_PREFIX;
+			//command = "docker rm " + Configure.CONTAINER_TAG_DCE_PREFIX;
 			for (int i = 1; i <= Configure.getContainers(); i++) {
 				exec(command + i);
 				Thread.sleep(500);

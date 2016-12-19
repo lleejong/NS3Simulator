@@ -19,8 +19,7 @@ public class DCEContainer {
 	}
 
 	private void init() {
-		DockerHelper.initDCEContainer(id);
-
+		//DockerHelper.initDCEContainer(id);
 	}
 
 	public String getHostname() {
