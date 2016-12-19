@@ -19,11 +19,8 @@ public class DCEContainer {
 	}
 
 	private void init() {
-		ConfigUI.log("Initiate DCE Container.. " + id);
-		ArrayList<String> logs = DockerHelper.initDCEContainer(id);
-		if (logs != null)
-			for (String log : logs)
-				ConfigUI.log("  -" + log);
+		DockerHelper.initDCEContainer(id);
+
 	}
 
 	public String getHostname() {
@@ -34,19 +31,21 @@ public class DCEContainer {
 
 	public void doJob(NS3Data data) {
 		String cacheHost = CacheContainer.hostname;
-		String args = cacheHost + " " + Configure.getPort() + " " +data.toString();
-		System.out.println("[Container "+ id +"]" + " Job assigned--" + data.toStringWithTagName());
+		String args = cacheHost + " " + Configure.getPort() + " " + data.toString();
+		System.out.println("[Container " + id + "]" + " Job assigned--" + data.toStringWithTagName());
 		log("Job assigned--" + data.toStringWithTagName());
-		//ConfigUI.log("[Container "+ id +"]" + " Job assigned--" + data.toStringWithTagName());
+		// ConfigUI.log("[Container "+ id +"]" + " Job assigned--" +
+		// data.toStringWithTagName());
 		long startTime = System.currentTimeMillis();
 		DockerHelper.dceTask(args, id, this);
 		long endTime = System.currentTimeMillis();
-		//ConfigUI.log("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
-		System.out.println("[Container "+ id +"]" + " Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
-		log("Elapsed Time : " + (endTime -startTime) /1000.0 + " sec.");
+		// ConfigUI.log("Elapsed Time : " + (endTime -startTime) /1000.0 + "
+		// sec.");
+		System.out.println("[Container " + id + "]" + " Elapsed Time : " + (endTime - startTime) / 1000.0 + " sec.");
+		log("Elapsed Time : " + (endTime - startTime) / 1000.0 + " sec.");
 	}
-	
-	public void log(String log){
+
+	public void log(String log) {
 		ConfigUI.log("[Container " + id + "]" + " " + log);
 	}
 
