@@ -99,7 +99,6 @@ public class DockerHelper {
 		String command = "cd /NS3Client && ./run.sh " + args;
 		String[] cmdArr = { "docker", "exec", "-i", Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash", "-c", command };
 
-		container.log("AAAA");
 		dceExec(cmdArr,container);
 
 	}
@@ -283,7 +282,6 @@ public class DockerHelper {
 	private static void dceExec(String[] command, DCEContainer container) {
 		try {
 			Process process = Runtime.getRuntime().exec(command);
-			container.log("BBBB");
 			final InputStream is = process.getInputStream();
 			new Thread(new DCETaskRunnable(is, container)).start();
 			process.waitFor();
