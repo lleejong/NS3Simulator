@@ -25,15 +25,9 @@ public class CacheContainer {
 		}
 
 		if (isExist) {
-			ArrayList<String> logs = DockerHelper.startCacheContainer();
-			if (logs != null)
-				for (String log : logs)
-					ConfigUI.log("  -" + log);
+			DockerHelper.startCacheContainer();
 		} else {
-			ConfigUI.log("Initiate Cache Container..");
-			ArrayList<String> logs = DockerHelper.initCacheContainer();
-			if(logs != null)
-				System.out.println(logs.get(0));
+			DockerHelper.initCacheContainer();
 		}
 	}
 
