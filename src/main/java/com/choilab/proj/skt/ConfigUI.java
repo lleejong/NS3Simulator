@@ -146,6 +146,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 	}
 	public static void log(String str) {
 		textArea.append(str + "\n");
+		
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -158,7 +159,11 @@ public class ConfigUI extends JFrame implements ActionListener {
 				Configure.setType(1);
 				isRunning = true;
 				buttonRun.setEnabled(false);
-				Executor.run();
+				new Thread(new Runnable(){
+					public void run(){
+						Executor.run();
+					}
+				}).start();
 			}
 
 		} else {

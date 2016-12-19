@@ -95,12 +95,6 @@ public class DockerHelper {
 
 	public static void dceTask(String args, int containerID, DCEContainer container) {
 
-		// String command = "docker exec -i " +
-		// (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
-		// + " /bin/bash -c \"cd /NS3Client && java -cp
-		// ./target/NS3Client-0.0.1-SNAPSHOT.jar com.choilab.proj.skt.App " +
-		// args + "\"";
-		// ArrayList<String> result = exec(command);
 
 		String command = "cd /NS3Client && ./run.sh " + args;
 		String[] cmdArr = { "docker", "exec", "-i", Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash", "-c", command };
@@ -181,7 +175,6 @@ public class DockerHelper {
 			new Thread(new Runnable() {
 				public void run() {
 					try {
-
 						String line;
 						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 						while ((line = reader.readLine()) != null) {
@@ -214,7 +207,7 @@ public class DockerHelper {
 
 	private static synchronized ArrayList<String> exec(String[] command) {
 		try {
-			System.out.println("----" + command.toString());
+			//System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			executionResult = new ArrayList<String>();
@@ -269,7 +262,7 @@ public class DockerHelper {
 				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 				while ((line = reader.readLine()) != null) {
 					// executionResult.add(line);
-					System.out.println(line);
+					//System.out.println(line);
 					container.log(line);
 				}
 			} catch (IOException e) {
@@ -288,7 +281,6 @@ public class DockerHelper {
 
 	private static void dceExec(String[] command, DCEContainer container) {
 		try {
-			// System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
 			new Thread(new DCETaskRunnable(is, container)).start();
