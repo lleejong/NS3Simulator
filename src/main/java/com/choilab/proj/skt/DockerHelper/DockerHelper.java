@@ -93,7 +93,7 @@ public class DockerHelper {
 		}
 	}
 
-	public static void dceTask(String args, int containerID) {
+	public static void dceTask(String args, int containerID, DCEContainer container) {
 
 		// String command = "docker exec -i " +
 		// (Configure.CONTAINER_TAG_DCE_PREFIX + containerID)
@@ -105,11 +105,7 @@ public class DockerHelper {
 		String command = "cd /NS3Client && ./run.sh " + args;
 		String[] cmdArr = { "docker", "exec", "-i", Configure.CONTAINER_TAG_DCE_PREFIX + containerID, "/bin/bash", "-c", command };
 
-		ArrayList<String> result = dceExec(cmdArr);
-		for (String log : result) {
-			// System.out.println(log);
-			ConfigUI.log(log);
-		}
+		dceExec(cmdArr,container);
 
 	}
 
@@ -256,45 +252,53 @@ public class DockerHelper {
 		return null;
 	}
 
-	private static synchronized ArrayList<String> dceExec(String[] command) {
+	private static class DCETaskRunnable implements Runnable {
+
+		private InputStream is;
+		private DCEContainer container;
+
+		public DCETaskRunnable(InputStream is, DCEContainer container) {
+			this.is = is;
+			this.container = container;
+		}
+
+		@Override
+		public void run() {
+			try {
+				String line;
+				BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+				while ((line = reader.readLine()) != null) {
+					// executionResult.add(line);
+					System.out.println(line);
+					container.log(line);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (is != null) {
+					try {
+						is.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	};
+
+	private static void dceExec(String[] command, DCEContainer container) {
 		try {
 			// System.out.println("----" + command.toString());
 			Process process = Runtime.getRuntime().exec(command);
 			final InputStream is = process.getInputStream();
-			executionResult = new ArrayList<String>();
-
-			new Thread(new Runnable() {
-				public void run() {
-					try {
-						String line;
-						BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-						while ((line = reader.readLine()) != null) {
-							// executionResult.add(line);
-							System.out.println(line);
-							ConfigUI.log(line);
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					} finally {
-						if (is != null) {
-							try {
-								is.close();
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}).start();
+			new Thread(new DCETaskRunnable(is, container)).start();
 			process.waitFor();
-
-			return executionResult;
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 
 	private static synchronized void exec(List<String> cmd) {

@@ -43,9 +43,9 @@ public class ConfigUI extends JFrame implements ActionListener {
 
 	JLabel typeLabel = new JLabel("Type : ");
 
-	JRadioButton trb1 = new JRadioButton("1");
-	JRadioButton trb2 = new JRadioButton("2");
-	JRadioButton trb3 = new JRadioButton("3");
+	JRadioButton trb1 = new JRadioButton("2CA");
+	JRadioButton trb2 = new JRadioButton("3CA");
+	JRadioButton trb3 = new JRadioButton("Other");
 	ButtonGroup bg2 = new ButtonGroup();
 
 	JLabel conLabel = new JLabel("Number of containers : ");
@@ -121,22 +121,8 @@ public class ConfigUI extends JFrame implements ActionListener {
 		textArea.setCaretPosition(textArea.getText().length());
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
-		textArea.setEditable(true);
-		textArea.append("---txLoss : 0.0 , txDelay : 751.0 , txJitter : 57.0 , rxLoss : 0.0, rxDelay : 751.0, rxJitter : 57.0\n");
-		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps\n");
-		textArea.append("Elapsed Time : 129.788 sec.\n");
-		
-		textArea.append("---txLoss : 0.0 , txDelay : 768.0 , txJitter : 81.0 , rxLoss : 0.0, rxDelay : 724.0, rxJitter : 9.0\n");
-		textArea.append("---[HIT] Througput from Server : 118 Mbps\n");
-		textArea.append("Elapsed Time : 0.373 sec.\n");
-		
-		textArea.append("---txLoss : 0.0 , txDelay : 788.0 , txJitter : 118.0 , rxLoss : 0.0, rxDelay : 759.0, rxJitter : 68.0\n");
-		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps\n");
-		textArea.append("Elapsed Time : 139.788 sec.\n");
-		
-		textArea.append("---txLoss : 0.0 , txDelay : 787.0 , txJitter : 111.0 , rxLoss : 0.0, rxDelay : 726.0, rxJitter : 19.0\n");
-		textArea.append("--[MISS] Throughput from DCE : 150.00 Mbps\n");
-		textArea.append("Elapsed Time : 157.138 sec.\n");
+		textArea.setEditable(false);
+
 
 		contentPane.add(infoScroll, BorderLayout.CENTER);
 
