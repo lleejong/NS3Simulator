@@ -65,14 +65,14 @@ public class ConfigUI extends JFrame implements ActionListener {
 
 	public ConfigUI() {
 		setTitle("Executor");
-		setBounds(100, 100, 400, 500);
+		setBounds(200, 200, 600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// INPUT
 		border1 = BorderFactory.createTitledBorder(border1, "Configure");
 
 		inputPanel.setBorder(border1);
-		inputPanel.setLayout(new GridLayout(3, 2, 10, 10));
+		inputPanel.setLayout(new GridLayout(3, 2, -100, 0));
 
 		cachePanel.setLayout(new GridLayout(1, 2));
 		bg1.add(crb1);
@@ -111,7 +111,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 		inputPanel.add(conLabel);
 		inputPanel.add(bx1);
 
-		inputPanel.setPreferredSize(new Dimension(inputPanel.getWidth(), 120));
+		inputPanel.setPreferredSize(new Dimension(inputPanel.getWidth(), 80));
 
 		contentPane.add(inputPanel, BorderLayout.NORTH);
 
@@ -122,7 +122,6 @@ public class ConfigUI extends JFrame implements ActionListener {
 		textArea.setLineWrap(true);
 		textArea.setWrapStyleWord(true);
 		textArea.setEditable(false);
-
 
 		contentPane.add(infoScroll, BorderLayout.CENTER);
 
@@ -140,13 +139,15 @@ public class ConfigUI extends JFrame implements ActionListener {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				System.out.println("AA");
-				ConfigureManager.writeXML(Configure.isCache(), Configure.getType(), Configure.getContainers());
+				// ConfigureManager.writeXML(Configure.isCache(),
+				// Configure.getType(), Configure.getContainers());
 			}
 		});
 	}
+
 	public static void log(String str) {
 		textArea.append(str + "\n");
-		
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -156,11 +157,11 @@ public class ConfigUI extends JFrame implements ActionListener {
 				// JOptionPane.showMessageDialog(this, "이걸 고치면 됨!!"); // RUN @@@
 				Configure.setCache(crb1.isSelected());
 				Configure.setContainers(Integer.parseInt(number[bx1.getSelectedIndex()]));
-				Configure.setType(1);
+				Configure.setType(trb1.isSelected() ? 1 : 2);
 				isRunning = true;
 				buttonRun.setEnabled(false);
-				new Thread(new Runnable(){
-					public void run(){
+				new Thread(new Runnable() {
+					public void run() {
 						Executor.run();
 					}
 				}).start();
