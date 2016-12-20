@@ -9,7 +9,7 @@ public class JobConverterFromCSV {
 	public static ArrayList<Job> read(String filename) {
 		try {
 			ArrayList<Job> list = new ArrayList<Job>();
-			BufferedReader br = new BufferedReader(new FileReader("./xml/sample1.csv"));
+			BufferedReader br = new BufferedReader(new FileReader(filename));
 			br.readLine();
 			
 			String line;
