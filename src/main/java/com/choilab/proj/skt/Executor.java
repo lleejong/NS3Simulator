@@ -47,7 +47,6 @@ public class Executor {
 		// 5. JobScheduler
 		//ArrayList<Job> jobList = JobConverterFromFile.readXML();
 		ArrayList<Job> jobList = JobConverterFromCSV.read("./xml/sample2.csv");
-		System.out.println(jobList.size());
 		for (Job newJob : jobList)
 			try {
 				jobScheduler.newJob(newJob);
