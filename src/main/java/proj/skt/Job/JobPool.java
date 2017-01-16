@@ -1,9 +1,9 @@
-package com.choilab.proj.skt.Job;
+package proj.skt.Job;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.choilab.proj.skt.DockerHelper.DCEContainer;
+import proj.skt.DockerHelper.DCEContainer;
 
 public class JobPool {
 

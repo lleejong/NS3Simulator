@@ -1,6 +1,6 @@
-package com.choilab.proj.skt.Job;
+package proj.skt.Job;
 
-import com.choilab.proj.skt.DockerHelper.DCEContainer;
+import proj.skt.DockerHelper.DCEContainer;
 
 public class JobHandler implements Runnable{
 	private int id;

@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.Configure;
+package proj.skt.Configure;
 
 import java.io.File;
 

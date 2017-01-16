@@ -1,4 +1,4 @@
-package com.choilab.proj.skt;
+package proj.skt;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -20,8 +20,8 @@ import javax.swing.JTextArea;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
 
-import com.choilab.proj.skt.Configure.Configure;
-import com.choilab.proj.skt.Configure.ConfigureManager;
+import proj.skt.Configure.Configure;
+import proj.skt.Configure.ConfigureManager;
 
 public class ConfigUI extends JFrame implements ActionListener {
 
@@ -65,7 +65,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 
 	public ConfigUI() {
 		setTitle("Executor");
-		setBounds(200, 200, 600, 500);
+		setBounds(200, 200, 900, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// INPUT
@@ -125,7 +125,7 @@ public class ConfigUI extends JFrame implements ActionListener {
 
 		contentPane.add(infoScroll, BorderLayout.CENTER);
 
-		// BOTTON
+		// BUTTON
 		buttonRun.setMnemonic('R');
 		buttonPanel.add(buttonRun);
 		buttonPanel.add(buttonExit);
@@ -138,16 +138,13 @@ public class ConfigUI extends JFrame implements ActionListener {
 		addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				System.out.println("AA");
-				// ConfigureManager.writeXML(Configure.isCache(),
-				// Configure.getType(), Configure.getContainers());
+				ConfigureManager.writeXML(Configure.isCache(),Configure.getType(), Configure.getContainers());
 			}
 		});
 	}
 
 	public static void log(String str) {
 		textArea.append(str + "\n");
-
 	}
 
 	public void actionPerformed(ActionEvent e) {

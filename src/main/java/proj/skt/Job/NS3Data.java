@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.Job;
+package proj.skt.Job;
 
 public class NS3Data {
 	// transmitter

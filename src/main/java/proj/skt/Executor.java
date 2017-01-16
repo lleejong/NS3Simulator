@@ -1,17 +1,17 @@
-package com.choilab.proj.skt;
+package proj.skt;
 
 import java.util.ArrayList;
 
 import javax.swing.SwingUtilities;
 
-import com.choilab.proj.skt.Configure.Configure;
-import com.choilab.proj.skt.Configure.ConfigureManager;
-import com.choilab.proj.skt.DockerHelper.CacheContainer;
-import com.choilab.proj.skt.DockerHelper.DCEContainer;
-import com.choilab.proj.skt.DockerHelper.DockerHelper;
-import com.choilab.proj.skt.Job.Job;
-import com.choilab.proj.skt.Job.JobConverterFromCSV;
-import com.choilab.proj.skt.Job.JobScheduler;
+import proj.skt.Configure.Configure;
+import proj.skt.Configure.ConfigureManager;
+import proj.skt.DockerHelper.CacheContainer;
+import proj.skt.DockerHelper.DCEContainer;
+import proj.skt.DockerHelper.DockerHelper;
+import proj.skt.Job.Job;
+import proj.skt.Job.JobConverterFromCSV;
+import proj.skt.Job.JobScheduler;
 
 public class Executor {
 

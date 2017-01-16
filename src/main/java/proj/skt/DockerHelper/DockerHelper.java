@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.DockerHelper;
+package proj.skt.DockerHelper;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,7 +8,7 @@ import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.choilab.proj.skt.Configure.Configure;
+import proj.skt.Configure.Configure;
 
 public class DockerHelper {
 	private static final int SLEEP_TIMER_SHORT = 200;

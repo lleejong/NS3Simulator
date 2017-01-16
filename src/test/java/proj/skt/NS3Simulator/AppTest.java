@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.NS3Simulator;
+package proj.skt.NS3Simulator;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

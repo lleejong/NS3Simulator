@@ -1,9 +1,9 @@
-package com.choilab.proj.skt.DockerHelper;
+package proj.skt.DockerHelper;
 
 import java.util.ArrayList;
 
-import com.choilab.proj.skt.ConfigUI;
-import com.choilab.proj.skt.Configure.Configure;
+import proj.skt.ConfigUI;
+import proj.skt.Configure.Configure;
 
 public class CacheContainer {
 

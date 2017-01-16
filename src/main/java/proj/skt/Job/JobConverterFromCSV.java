@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.Job;
+package proj.skt.Job;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,10 +1,10 @@
-package com.choilab.proj.skt.DockerHelper;
+package proj.skt.DockerHelper;
 
 import java.util.ArrayList;
 
-import com.choilab.proj.skt.ConfigUI;
-import com.choilab.proj.skt.Configure.Configure;
-import com.choilab.proj.skt.Job.NS3Data;
+import proj.skt.ConfigUI;
+import proj.skt.Configure.Configure;
+import proj.skt.Job.NS3Data;
 
 public class DCEContainer {
 	private static int dceID = 1;

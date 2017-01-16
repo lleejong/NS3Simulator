@@ -1,9 +1,9 @@
-package com.choilab.proj.skt.Job;
+package proj.skt.Job;
 
 import java.util.ArrayList;
 
-import com.choilab.proj.skt.Configure.Configure;
-import com.choilab.proj.skt.DockerHelper.DCEContainer;
+import proj.skt.Configure.Configure;
+import proj.skt.DockerHelper.DCEContainer;
 
 public class JobScheduler {
 

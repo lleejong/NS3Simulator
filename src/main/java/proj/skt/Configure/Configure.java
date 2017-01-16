@@ -1,4 +1,4 @@
-package com.choilab.proj.skt.Configure;
+package proj.skt.Configure;
 
 public class Configure {
 	// TODO: Configure 상수들
